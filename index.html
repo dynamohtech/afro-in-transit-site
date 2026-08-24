@@ -147,15 +147,35 @@
     .hero-visual{order:-1;}
     .about-stats, .steps{grid-template-columns:1fr 1fr;}
     .tokenomics-grid{grid-template-columns:1fr 1fr;}
+
+    /* Mobile Menu Styles */
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 20px;
+      gap: 16px;
+    }
+    .nav-links.mobile-active {
+      display: flex;
+    }
+    .mobile-toggle {
+      display: block;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
   }
-  @media (max-width:520px){
-    .section{padding:64px 0;}
-    .about-stats, .steps, .tokenomics-grid{grid-template-columns:1fr;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1; transform:none; transition:none;}
-    .marquee-track{animation:none;}
-    .btn:hover{transform:none;}
+
+  @media (min-width: 861px) {
+    .mobile-toggle { display: none; }
   }
 </style>
 </head>
@@ -167,7 +187,11 @@
       <span class="logo-mark"><img src="coin-logo.jpg" alt="Afro in Transit coin logo"></span>
       <span class="logo-text">Afro in Transit</span>
     </a>
-    <nav class="nav-links" aria-label="Section navigation">
+
+    <!-- NEW BUTTON ADDED HERE -->
+    <button class="mobile-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+    <nav class="nav-links" id="navLinks" aria-label="Section navigation">
       <a class="nav-link" href="#about">About</a>
       <a class="nav-link" href="#buy">How to Buy</a>
       <a class="nav-link" href="#tokenomics">Tokenomics</a>
@@ -403,6 +427,22 @@
       });
     });
   });
+
+  // Mobile Menu Toggle Code
+  var menuToggle = document.getElementById('menuToggle');
+  var navLinks = document.getElementById('navLinks');
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', function() {
+      navLinks.classList.toggle('mobile-active');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        navLinks.classList.remove('mobile-active');
+      });
+    });
+  }
 </script>
 </body>
 </html>
